@@ -1,12 +1,6 @@
 import Link from 'next/link'
-import { ArrowRight, Activity, ShieldHalf, Timer, ChartCandlestick } from 'lucide-react'
+import { ArrowRight, ChartCandlestick } from 'lucide-react'
 import { CocoEngine } from '@/components/coco/coco-engine'
-
-const STATS = [
-  { icon: Activity, title: 'Real time scan', desc: 'Every tick read as it prints' },
-  { icon: ShieldHalf, title: 'Risk aware', desc: 'Confidence scored entries' },
-  { icon: Timer, title: 'Always awake', desc: 'Signals around the clock' },
-]
 
 export function CocoHero() {
   return (
@@ -61,25 +55,6 @@ export function CocoHero() {
           <div className="pointer-events-none absolute -inset-8 -z-10 rounded-[2.5rem] bg-[radial-gradient(closest-side,rgba(90,140,255,0.3),transparent)] blur-2xl" />
         </div>
 
-        <div
-          className="coco-rise mx-auto mt-14 grid max-w-[860px] grid-cols-1 gap-8 border-t border-white/10 pt-10 sm:grid-cols-3 sm:gap-0"
-          style={{ '--d': '400ms' } as React.CSSProperties}
-        >
-          {STATS.map((s, i) => (
-            <div
-              key={s.title}
-              className={`flex flex-col items-center gap-2 px-6 ${
-                i > 0 ? 'sm:border-l sm:border-white/10' : ''
-              }`}
-            >
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/12 bg-white/[0.06] text-[#9db8ff]">
-                <s.icon className="h-4 w-4" />
-              </span>
-              <p className="mt-1 text-sm font-semibold text-white">{s.title}</p>
-              <p className="text-[13px] leading-snug text-white/55">{s.desc}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )
