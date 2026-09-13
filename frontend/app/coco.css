@@ -27,17 +27,17 @@
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(120% 70% at 50% -12%, rgba(198, 222, 255, 0.3), transparent 58%),
-    radial-gradient(90% 60% at 50% 0%, rgba(58, 118, 255, 0.5), transparent 62%),
-    radial-gradient(70% 55% at 85% 22%, rgba(104, 72, 255, 0.34), transparent 66%),
+    radial-gradient(120% 70% at 50% -14%, rgba(120, 158, 220, 0.12), transparent 56%),
+    radial-gradient(90% 60% at 50% 0%, rgba(30, 66, 160, 0.3), transparent 60%),
+    radial-gradient(70% 55% at 85% 22%, rgba(62, 44, 150, 0.2), transparent 64%),
     linear-gradient(
       180deg,
-      #12266e 0%,
-      #1639b4 14%,
-      #1d3fd0 28%,
-      #1b2f8f 45%,
-      #141a52 62%,
-      #0c0a2c 80%,
+      #0a1442 0%,
+      #0d1c5e 16%,
+      #0f2170 30%,
+      #0d1a55 46%,
+      #0a1136 62%,
+      #070a23 80%,
       var(--cosmic) 100%
     );
   color: #fff;
