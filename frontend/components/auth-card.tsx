@@ -85,7 +85,7 @@ export function AuthCard({ mode }: { mode: AuthMode }) {
       className="coco-rise w-full max-w-[440px] rounded-[20px] border border-[var(--hairline)] bg-white p-6 shadow-[rgba(0,0,0,0.04)_0_12px_24px_-8px,rgba(0,0,0,0.04)_0_0_0_1px] sm:p-8"
       data-testid="auth-card"
     >
-      <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--hairline)] bg-[var(--mist)] p-1">
+      <div className="grid grid-cols-2 gap-1 rounded-[10px] border border-[var(--hairline)] bg-[var(--mist)] p-1">
         <Link
           href="/login"
           data-active={isLogin}
