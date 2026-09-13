@@ -1,0 +1,777 @@
+/* ── Coco AI design system (home + auth) ─────────────────────────────── */
+
+.coco {
+  --iris: #0036ff;
+  --iris-soft: #2a57ff;
+  --cyan: #0093ff;
+  --void: #05061b;
+  --cosmic: #0f071d;
+  --ink: #141414;
+  --dim: #656565;
+  --hairline: #e5e7eb;
+  --frost: #e1ecff;
+  --mist: #f6f7f9;
+
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.coco *,
+.coco *::before,
+.coco *::after {
+  border-color: var(--hairline);
+}
+
+/* Zones */
+.coco-dark {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 70% at 50% -12%, rgba(198, 222, 255, 0.3), transparent 58%),
+    radial-gradient(90% 60% at 50% 0%, rgba(58, 118, 255, 0.5), transparent 62%),
+    radial-gradient(70% 55% at 85% 22%, rgba(104, 72, 255, 0.34), transparent 66%),
+    linear-gradient(
+      180deg,
+      #12266e 0%,
+      #1639b4 14%,
+      #1d3fd0 28%,
+      #1b2f8f 45%,
+      #141a52 62%,
+      #0c0a2c 80%,
+      var(--cosmic) 100%
+    );
+  color: #fff;
+}
+
+.coco-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% 110%, rgba(5, 4, 18, 0.85), transparent 62%);
+}
+
+.coco-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+.coco-light {
+  background:    radial-gradient(60rem 26rem at 50% 0%, rgba(209, 233, 255, 0.55), transparent 62%),
+    linear-gradient(180deg, #ffffff 0%, #fbfcfe 48%, #f7f7f8 100%);
+  color: var(--ink);
+}
+
+/* Calmer dark grading for blocks (cards, footer) */
+.coco-shade {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(100% 70% at 50% -10%, rgba(62, 112, 255, 0.42), transparent 62%),
+    radial-gradient(70% 60% at 92% 4%, rgba(120, 82, 255, 0.28), transparent 68%),
+    linear-gradient(180deg, #16246c 0%, #131a52 34%, #0c0a2c 70%, #070518 100%);
+  color: #fff;
+}
+
+.coco-dark .coco-title-gradient,
+.coco-shade .coco-title-gradient {
+  background-image: linear-gradient(
+    176deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.92) 42%,
+    rgba(255, 255, 255, 0.64) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Gradient headline chrome (dark + light zones) */
+.coco-title-gradient {
+  background-image: linear-gradient(
+    176deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.92) 42%,
+    rgba(255, 255, 255, 0.64) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.coco-light .coco-title-gradient {
+  background-image: linear-gradient(176deg, #141414 0%, #24242c 48%, #55555f 100%);
+}
+
+.coco-accent-gradient {
+  background-image: linear-gradient(100deg, #6fc0ff 0%, #2f7bff 48%, #a78bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Pastel gradient surface, ToDesktop CTA grading */
+.coco-pastel {
+  background-image: linear-gradient(
+    114.58deg,
+    #d1e9ff -1.34%,
+    rgba(255, 222, 253, 0.56) 24.05%,
+    rgba(247, 247, 247, 1) 74.82%
+  );
+  outline: 1px solid rgba(55, 55, 55, 0.04);
+  outline-offset: -1px;
+}
+
+/* Ghost surface for light-zone blocks */
+.coco-ghost {
+  background: rgba(55, 55, 55, 0.045);
+  border: 1px solid rgba(55, 55, 55, 0.06);
+}
+
+/* Gradient hairline rules */
+.coco-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22) 22%,
+    rgba(255, 255, 255, 0.22) 78%,
+    transparent
+  );
+}
+.coco-light .coco-rule {
+  background: linear-gradient(90deg, transparent, var(--hairline) 20%, var(--hairline) 80%, transparent);
+}
+
+.coco-ink {
+  color: var(--ink);
+}
+.coco-muted {
+  color: var(--dim);
+}
+.coco-accent {
+  color: var(--cyan);
+}
+
+/* Display type */
+.coco-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.05;
+}
+
+.coco-sub {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Mono eyebrow tag */
+.coco-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: var(--font-tech), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  border: 1px solid var(--hairline);
+  background-image: linear-gradient(180deg, rgba(55, 55, 55, 0.05), rgba(55, 55, 55, 0.02));
+  color: var(--ink);
+}
+
+.coco-dark .coco-eyebrow,
+.coco-shade .coco-eyebrow {
+  border-color: rgba(255, 255, 255, 0.14);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+  color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    rgba(255, 255, 255, 0.14) 0 1px 0 0 inset,
+    rgba(2, 9, 44, 0.35) 0 4px 16px 0;
+}
+
+.coco-mono {
+  font-family: var(--font-tech), ui-monospace, monospace;
+  letter-spacing: 0.03em;
+}
+
+/* Buttons */
+.coco-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.25s ease,
+    color 0.2s ease;
+}
+
+.coco-btn svg {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.coco-btn-primary {
+  background-image: linear-gradient(180deg, #3f6bff 0%, #0f3fff 52%, #0030e8 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    rgba(255, 255, 255, 0.22) 0 1px 2px -0.5px inset,
+    rgba(255, 255, 255, 0.28) 0 0.5px 0.5px 0 inset,
+    rgba(255, 255, 255, 0.18) 0 8px 24px -4px inset,
+    rgba(0, 54, 255, 0.42) 0 12px 28px -12px;
+}
+.coco-btn-primary:hover {
+  background-image: linear-gradient(180deg, #5479ff 0%, #1b4bff 52%, #0036ff 100%);
+  transform: translateY(-1px);
+}
+.coco-btn-primary:hover svg:last-child {
+  transform: translateX(3px);
+}
+.coco-btn-primary:active {
+  transform: translateY(0);
+}
+
+.coco-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+}
+.coco-btn-ghost:hover {
+  background: var(--ink);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.coco-dark .coco-btn-ghost,
+.coco-shade .coco-btn-ghost {
+  border-color: rgba(255, 255, 255, 0.32);
+  color: #fff;
+}
+.coco-dark .coco-btn-ghost:hover,
+.coco-shade .coco-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Pill nav */
+.coco-nav {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(10, 9, 32, 0.55)),
+    linear-gradient(180deg, rgba(10, 9, 32, 0.7), rgba(10, 9, 32, 0.7));
+  backdrop-filter: blur(18px) saturate(160%);
+  box-shadow:
+    rgba(255, 255, 255, 0.1) 0 1px 3px 0 inset,
+    rgba(2, 9, 44, 0.45) 0 16px 56px 0;
+}
+
+.coco-navlink {
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.66);
+  transition: color 0.2s ease;
+}
+.coco-navlink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -6px;
+  height: 1.5px;
+  background: var(--cyan);
+  transition: right 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.coco-navlink:hover {
+  color: #fff;
+}
+.coco-navlink:hover::after {
+  right: 0;
+}
+
+/* Cards */
+.coco-card {
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  background-image: linear-gradient(180deg, #ffffff 0%, #fafbfd 100%);
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background-image 0.3s ease;
+}
+.coco-card:hover {
+  transform: translateY(-4px);
+  border-color: #c9d6ff;
+  background-image: linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%);
+  box-shadow:
+    rgba(0, 54, 255, 0.1) 0 14px 28px -12px,
+    rgba(0, 0, 0, 0.04) 0 0 0 1px;
+}
+
+.coco-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  width: 44px;
+  border-radius: 12px;
+  background-image: linear-gradient(160deg, #e8f1ff 0%, #dbe6ff 55%, #f1e9ff 100%);
+  border: 1px solid #cfe0ff;
+  color: var(--iris);
+  box-shadow: rgba(255, 255, 255, 0.9) 0 1px 0 0 inset;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+}
+.coco-card:hover .coco-icon {
+  transform: translateY(-2px) rotate(-4deg);
+  filter: saturate(1.25);
+}
+
+.coco-dark .coco-card {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(14px);
+}
+
+/* Terminal window mockup */
+.coco-window {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    rgba(255, 255, 255, 0.06) 0 1px 3px 0 inset,
+    rgba(2, 9, 44, 0.5) 0 24px 64px 0;
+}
+.coco-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.coco-window-body {
+  background-image: linear-gradient(180deg, #070824 0%, var(--void) 60%, #04040f 100%);
+  padding: 18px 16px;
+}
+.coco-dot {
+  height: 9px;
+  width: 9px;
+  border-radius: 999px;
+}
+
+/* Inputs */
+.coco-input {
+  height: 46px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  background: #fff;
+  padding: 0 40px 0 40px;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.coco-input::placeholder {
+  color: #9a9aa3;
+}
+.coco-input:focus {
+  border-color: var(--iris);
+  box-shadow: 0 0 0 3px rgba(0, 54, 255, 0.12);
+}
+
+.coco-tab {
+  display: flex;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dim);
+  transition: background-color 0.22s ease, color 0.22s ease;
+}
+.coco-tab:hover {
+  color: var(--ink);
+}
+.coco-tab[data-active='true'] {
+  background-image: linear-gradient(180deg, #3f6bff 0%, #0f3fff 52%, #0030e8 100%);
+  color: #fff;
+  box-shadow: rgba(255, 255, 255, 0.22) 0 1px 0 0 inset;
+}
+
+/* ── Engine system map (chip grid) ──────────────────────────────────── */
+
+.coco-cell {
+  opacity: 0;
+  animation: coco-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Chip frame */
+.coco-chip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 66px;
+  width: 100%;
+  max-width: 92px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(160deg, #1b2358 0%, #131a46 55%, #0d1233 100%);
+  box-shadow:
+    rgba(255, 255, 255, 0.1) 0 1px 0 0 inset,
+    rgba(4, 8, 40, 0.45) 0 14px 30px -14px;
+  color: #dbe7ff;
+  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+}
+.coco-chip:hover {
+  border-color: rgba(180, 203, 255, 0.6);
+  transform: translateY(-3px);
+  box-shadow: rgba(120, 160, 255, 0.25) 0 18px 40px -18px;
+}
+
+@media (min-width: 768px) {
+  .coco-chip {
+    height: 76px;
+    max-width: 104px;
+  }
+  .coco-chip-core {
+    height: 84px;
+    max-width: 112px;
+  }
+}
+
+.coco-chip-core {
+  height: 74px;
+  max-width: 100px;
+  border-color: rgba(180, 203, 255, 0.6);
+  background:
+    radial-gradient(85% 80% at 50% 0%, rgba(120, 156, 255, 0.4), transparent 70%),
+    linear-gradient(165deg, #23306f 0%, #131a52 58%, #0b1030 100%);
+  box-shadow:
+    rgba(255, 255, 255, 0.14) 0 1px 0 0 inset,
+    rgba(60, 100, 255, 0.4) 0 0 58px -10px;
+}
+
+/* chip pins */
+.coco-pins {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transform: translateY(-50%);
+}
+.coco-pins i {
+  display: block;
+  height: 2px;
+  width: 5px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.28);
+}
+.coco-pins-l {
+  left: -6px;
+}
+.coco-pins-r {
+  right: -6px;
+}
+
+.coco-notch {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  height: 7px;
+  width: 7px;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  border-top-left-radius: 3px;
+}
+
+/* label pill */
+.coco-tag {
+  margin-top: 10px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #131a44;
+  padding: 3px 8px;
+  font-family: var(--font-tech), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+
+.coco-glyph {
+  height: 38px;
+  width: 54px;
+  filter: drop-shadow(0 0 8px rgba(143, 178, 255, 0.3));
+}
+
+.coco-glyph-core {
+  height: 40px;
+  width: 40px;
+}
+
+/* Wires */
+.coco-dash {
+  animation: coco-dash 2.6s linear infinite;
+}
+@keyframes coco-dash {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Core */
+.coco-core-ring {
+  position: absolute;
+  inset: 24%;
+  border-radius: 16px;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(157, 184, 255, 0.05) 140deg,
+    #e8f0ff 200deg,
+    rgba(157, 184, 255, 0.05) 260deg,
+    transparent 360deg
+  );
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: coco-orbit 5s linear infinite;
+}
+
+.coco-core-glow {
+  position: absolute;
+  inset: 20%;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, rgba(143, 178, 255, 0.5), transparent);
+  filter: blur(14px);
+  animation: coco-pulse 3s ease-in-out infinite;
+}
+
+/* Glyph micro animations */
+.coco-candle {
+  transform-origin: center bottom;
+  animation: coco-candle 2.4s ease-in-out infinite;
+}
+@keyframes coco-candle {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translateY(3px);
+  }
+  45% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.coco-node-dot {
+  animation: coco-pulse 2.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.coco-seg-dot {
+  opacity: 0.25;
+  animation: coco-seg 3.2s ease-in-out infinite;
+}
+@keyframes coco-seg {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  40%,
+  70% {
+    opacity: 1;
+  }
+}
+
+.coco-seg-bar {
+  opacity: 0.35;
+  animation: coco-seg 3.2s ease-in-out infinite;
+  animation-delay: 1.4s;
+}
+
+.coco-ledger-bar {
+  animation: coco-ledger 1.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+@keyframes coco-ledger {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.coco-orbit-dash {
+  animation: coco-dash 2.4s linear infinite;
+}
+
+.coco-wave {
+  animation: coco-wave 1.9s ease-in-out infinite;
+}
+@keyframes coco-wave {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+.coco-core-diamond {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: coco-pulse 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coco-dash,
+  .coco-orbit-dash,
+  .coco-core-ring,
+  .coco-core-glow,
+  .coco-candle,
+  .coco-node-dot,
+  .coco-seg-dot,
+  .coco-seg-bar,
+  .coco-ledger-bar,
+  .coco-core-diamond,
+  .coco-wave,
+  .coco-cell {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Motion */
+.coco-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: coco-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes coco-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.coco-ticker {
+  animation: coco-ticker 1.6s steps(2) infinite;
+}
+@keyframes coco-ticker {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.coco-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(0, 147, 255, 0.16) 50%,
+    transparent 60%
+  );
+  background-size: 260% 100%;
+  animation: coco-sweep 6s ease-in-out infinite;
+}
+@keyframes coco-sweep {
+  0% {
+    background-position: 160% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
+}
+
+.coco-bar {
+  transform-origin: bottom;
+  animation: coco-bar 1.5s ease-in-out infinite;
+}
+@keyframes coco-bar {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.coco-pulse {
+  animation: coco-pulse 2.4s ease-in-out infinite;
+}
+@keyframes coco-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.coco-orbit {
+  animation: coco-orbit 18s linear infinite;
+}
+@keyframes coco-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coco-rise,
+  .coco-sweep,
+  .coco-bar,
+  .coco-pulse,
+  .coco-orbit,
+  .coco-ticker {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
