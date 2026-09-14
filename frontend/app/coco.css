@@ -947,6 +947,7 @@
   .coco-core,
   .coco-core-halo,
   .coco-dash,
+  .coco-dash-seq,
   .coco-tape-track,
   .coco-sig-row,
   .coco-verdict-bar > i {
@@ -967,4 +968,22 @@
   .coco-conf {
     display: none;
   }
+}
+
+.coco-dash-seq {
+  animation-name: coco-dash-seq;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes coco-dash-seq {
+  from {
+    stroke-dashoffset: 716;
+  }
+  to {
+    stroke-dashoffset: 16;
+  }
+}
+.coco-tile-icon {
+  width: 50%;
+  height: 50%;
 }

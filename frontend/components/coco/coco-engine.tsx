@@ -1,19 +1,18 @@
 import Image from 'next/image'
 import {
-  ScanLine,
-  ScanSearch,
-  Radio,
-  Telescope,
-  Newspaper,
-  ShieldHalf,
-  ChartCandlestick,
-  type LucideIcon,
-} from 'lucide-react'
+  GlyphOtc,
+  GlyphReal,
+  GlyphLive,
+  GlyphFuture,
+  GlyphNews,
+  GlyphRisk,
+  GlyphFeed,
+} from '@/components/coco/coco-glyphs'
 
 type Tile = {
   key: string
   label: string
-  icon: LucideIcon
+  icon: (p: { className?: string }) => React.JSX.Element
   bg: string
   ink: string
 }
@@ -22,6 +21,7 @@ type Placed = { x: number; y: number; s: number }
 type Wire = { d: string; dot?: [number, number]; c: string }
 
 type Layout = {
+  id: string
   w: number
   h: number
   core: { x: number; y: number; r: number }
@@ -30,16 +30,17 @@ type Layout = {
 }
 
 const TILES: Tile[] = [
-  { key: 'otc', label: 'OTC Analyzer', icon: ScanLine, bg: 'linear-gradient(145deg,#8a4cf0 0%,#4a1f9e 100%)', ink: '#fff' },
-  { key: 'real', label: 'Real Chart', icon: ScanSearch, bg: 'linear-gradient(145deg,#3d424f 0%,#1a1d25 100%)', ink: '#e8ecf5' },
-  { key: 'live', label: 'Live Signals', icon: Radio, bg: 'linear-gradient(145deg,#2563eb 0%,#0c2a7a 100%)', ink: '#fff' },
-  { key: 'future', label: 'Future Signals', icon: Telescope, bg: 'linear-gradient(145deg,#4a3823 0%,#1f160c 100%)', ink: '#ff7a45' },
-  { key: 'news', label: 'News Signals', icon: Newspaper, bg: 'linear-gradient(145deg,#3b3a2f 0%,#1a1a14 100%)', ink: '#f2f2ec' },
-  { key: 'risk', label: 'Risk Guard', icon: ShieldHalf, bg: 'linear-gradient(145deg,#3f3e86 0%,#1c1b4d 100%)', ink: '#9db8ff' },
-  { key: 'feed', label: 'Market Feed', icon: ChartCandlestick, bg: 'linear-gradient(145deg,#d02c97 0%,#5c1148 100%)', ink: '#fff' },
+  { key: 'otc', label: 'OTC Analyzer', icon: GlyphOtc, bg: 'linear-gradient(145deg,#8a4cf0 0%,#4a1f9e 100%)', ink: '#fff' },
+  { key: 'real', label: 'Real Chart', icon: GlyphReal, bg: 'linear-gradient(145deg,#3d424f 0%,#1a1d25 100%)', ink: '#e8ecf5' },
+  { key: 'live', label: 'Live Signals', icon: GlyphLive, bg: 'linear-gradient(145deg,#2563eb 0%,#0c2a7a 100%)', ink: '#fff' },
+  { key: 'future', label: 'Future Signals', icon: GlyphFuture, bg: 'linear-gradient(145deg,#4a3823 0%,#1f160c 100%)', ink: '#ff7a45' },
+  { key: 'news', label: 'News Signals', icon: GlyphNews, bg: 'linear-gradient(145deg,#3b3a2f 0%,#1a1a14 100%)', ink: '#f2f2ec' },
+  { key: 'risk', label: 'Risk Guard', icon: GlyphRisk, bg: 'linear-gradient(145deg,#3f3e86 0%,#1c1b4d 100%)', ink: '#9db8ff' },
+  { key: 'feed', label: 'Market Feed', icon: GlyphFeed, bg: 'linear-gradient(145deg,#d02c97 0%,#5c1148 100%)', ink: '#fff' },
 ]
 
 const DESKTOP: Layout = {
+  id: 'd',
   w: 720,
   h: 400,
   core: { x: 360, y: 200, r: 54 },
@@ -64,6 +65,7 @@ const DESKTOP: Layout = {
 }
 
 const MOBILE: Layout = {
+  id: 'm',
   w: 360,
   h: 460,
   core: { x: 180, y: 230, r: 44 },
@@ -92,7 +94,9 @@ function pct(v: number, base: number) {
 }
 
 function Diagram({ layout, className }: { layout: Layout; className?: string }) {
-  const { w, h, core, tiles, wires } = layout
+  const { id, w, h, core, tiles, wires } = layout
+  const step = 0.5
+  const cycle = wires.length * step
   return (
     <div className={`relative w-full ${className ?? ''}`} style={{ aspectRatio: `${w} / ${h}` }}>
       <svg
@@ -101,11 +105,9 @@ function Diagram({ layout, className }: { layout: Layout; className?: string }) 
         aria-hidden="true"
       >
         <defs>
-          <linearGradient id="cocoPulse" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#8fb2ff" stopOpacity="0" />
-            <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
-            <stop offset="100%" stopColor="#8fb2ff" stopOpacity="0" />
-          </linearGradient>
+          <filter id={`cocoGlow-${id}`} x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.4" />
+          </filter>
         </defs>
         {wires.map((wire, i) => (
           <g key={wire.d}>
@@ -118,16 +120,30 @@ function Diagram({ layout, className }: { layout: Layout; className?: string }) 
               vectorEffect="non-scaling-stroke"
             />
             <path
-              className="coco-dash"
+              className="coco-dash-seq"
               d={wire.d}
               pathLength={100}
               fill="none"
-              stroke="url(#cocoPulse)"
-              strokeWidth="2.4"
+              stroke="#8fb2ff"
+              strokeOpacity="0.9"
+              strokeWidth="7"
               strokeLinecap="round"
-              strokeDasharray="14 86"
+              strokeDasharray="16 684"
               vectorEffect="non-scaling-stroke"
-              style={{ animationDelay: `${i * 360}ms`, animationDuration: '3.2s' }}
+              filter={`url(#cocoGlow-${id})`}
+              style={{ animationDelay: `${i * step}s`, animationDuration: `${cycle}s` }}
+            />
+            <path
+              className="coco-dash-seq"
+              d={wire.d}
+              pathLength={100}
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeDasharray="16 684"
+              vectorEffect="non-scaling-stroke"
+              style={{ animationDelay: `${i * step}s`, animationDuration: `${cycle}s` }}
             />
             {wire.dot && (
               <circle
@@ -163,7 +179,7 @@ function Diagram({ layout, className }: { layout: Layout; className?: string }) 
               } as React.CSSProperties
             }
           >
-            <tile.icon className="coco-tile-icon" strokeWidth={1.7} />
+            <tile.icon className="coco-tile-icon" />
           </div>
         )
       })}
@@ -189,13 +205,6 @@ function Diagram({ layout, className }: { layout: Layout; className?: string }) 
 export function CocoEngine() {
   return (
     <div className="coco-engine relative mx-auto w-full max-w-[820px]" data-testid="engine-diagram">
-      <div className="mb-6 flex items-center justify-center gap-2">
-        <span className="coco-pulse h-1.5 w-1.5 rounded-full bg-[#4ade80]" />
-        <span className="coco-mono text-[10px] uppercase tracking-[0.16em] text-white/45">
-          coco-engine · 7 modules · one core
-        </span>
-      </div>
-
       <Diagram layout={DESKTOP} className="hidden sm:block" />
       <Diagram layout={MOBILE} className="mx-auto max-w-[360px] sm:hidden" />
 

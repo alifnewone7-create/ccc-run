@@ -16,6 +16,8 @@ Clone `https://github.com/alifnewone7-create/cc-run.git`, run the site as-is, th
   - CSS additions in `coco.css` (tiles, core, tape, glass cards, steps, terminal rows, FAQ, testimonial quote).
   - Tested via testing agent (`/app/test_reports/iteration_1.json`): all pass, no hydration errors, no mobile overflow.
 
+- 2026-06 (follow-up): removed "coco-engine · 7 modules · one core" label; custom premium SVG glyphs in `components/coco/coco-glyphs.tsx`; wire pulse now sequential one-line-at-a-time (`.coco-dash-seq`, 0.5s per wire) and fixed on mobile (root cause: bbox-based gradient stroke was transparent on vertical segments + duplicate gradient id across hidden SVG; now solid white pulse with blur glow filter, per-layout ids).
+
 ## Backlog
 - P1: Wire ticker/terminal to real data (`/api/signals/live`) if desired.
 - P2: Dashboard pages restyle to match new home design system.
