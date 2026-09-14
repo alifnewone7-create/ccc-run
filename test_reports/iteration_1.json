@@ -1,0 +1,35 @@
+{
+  "summary": "Frontend-only smoke + interaction test of the Coco AI landing page (Next.js prerendered). All requested UI/UX behaviors verified on desktop (1920) and mobile (390). Engine diagram renders 7 tiles + core on both breakpoints with the opposite variant hidden via CSS as intended. Market ticker, navbar (desktop + mobile), modules bento, how-it-works, signal terminal (live rotation with real HH:MM:SS times), testimonials, and FAQ (item-1 open by default, item-2 expands on click) all work. /login and /registration pages render with auth-card intact. No console errors, no page errors, no hydration warnings. No horizontal overflow at 390px.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Mobile menu <a> links do not carry data-testid attributes (nav-mobile-link-*). Not required by the current spec but recommended for future automated regression coverage."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Landing page is a static Next.js prerender. Engine diagram renders 2 variants (desktop grid + mobile stack), each with its own copy of engine-tile-* and engine-core testids; CSS hides one based on viewport, so tile testid queries return count=2 with exactly one visible. Signal terminal rotates rows every ~2.6s client-side. FAQ items are <details> elements; check .getAttribute('open') to test expand state.",
+  "verified_flows": [
+    "Desktop engine-diagram: all 7 tiles + core visible, mobile variant hidden",
+    "Mobile engine-diagram: all 7 tiles + core visible, desktop variant hidden",
+    "Market ticker renders",
+    "Navbar links (5) href to correct #ids; nav-cta -> /login",
+    "Mobile toggle opens menu with 5 nav links + support + nav-mobile-cta -> /login",
+    "5 module cards + module-link-* -> /login",
+    "how-step-1..3 visible",
+    "signal-terminal: 5 rows, top row changes after 3s, times are real HH:MM:SS, terminal-cta -> /login",
+    "testimonial-1..3 visible",
+    "faq-item-1 open by default; faq-item-2 opens on click; faq-support-cta -> https://t.me/Ayan_sx",
+    "/login and /registration render auth-card",
+    "Mobile scrollWidth = 390 (no horizontal overflow)",
+    "0 console errors / 0 page errors / 0 hydration warnings"
+  ]
+}

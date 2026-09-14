@@ -421,264 +421,6 @@
   box-shadow: rgba(255, 255, 255, 0.22) 0 1px 0 0 inset;
 }
 
-/* ── Engine system map (chip grid) ──────────────────────────────────── */
-
-.coco-cell {
-  opacity: 0;
-  animation: coco-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: var(--d, 0ms);
-}
-
-/* Chip frame */
-.coco-chip {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: 66px;
-  width: 100%;
-  max-width: 92px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: linear-gradient(160deg, #1b2358 0%, #131a46 55%, #0d1233 100%);
-  box-shadow:
-    rgba(255, 255, 255, 0.1) 0 1px 0 0 inset,
-    rgba(4, 8, 40, 0.45) 0 14px 30px -14px;
-  color: #dbe7ff;
-  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.3s ease;
-}
-.coco-chip:hover {
-  border-color: rgba(180, 203, 255, 0.6);
-  transform: translateY(-3px);
-  box-shadow: rgba(120, 160, 255, 0.25) 0 18px 40px -18px;
-}
-
-@media (min-width: 768px) {
-  .coco-chip {
-    height: 76px;
-    max-width: 104px;
-  }
-  .coco-chip-core {
-    height: 84px;
-    max-width: 112px;
-  }
-}
-
-.coco-chip-core {
-  height: 74px;
-  max-width: 100px;
-  border-color: rgba(180, 203, 255, 0.6);
-  background:
-    radial-gradient(85% 80% at 50% 0%, rgba(120, 156, 255, 0.4), transparent 70%),
-    linear-gradient(165deg, #23306f 0%, #131a52 58%, #0b1030 100%);
-  box-shadow:
-    rgba(255, 255, 255, 0.14) 0 1px 0 0 inset,
-    rgba(60, 100, 255, 0.4) 0 0 58px -10px;
-}
-
-/* chip pins */
-.coco-pins {
-  position: absolute;
-  top: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  transform: translateY(-50%);
-}
-.coco-pins i {
-  display: block;
-  height: 2px;
-  width: 5px;
-  border-radius: 1px;
-  background: rgba(255, 255, 255, 0.28);
-}
-.coco-pins-l {
-  left: -6px;
-}
-.coco-pins-r {
-  right: -6px;
-}
-
-.coco-notch {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  height: 7px;
-  width: 7px;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-  border-left: 1px solid rgba(255, 255, 255, 0.35);
-  border-top-left-radius: 3px;
-}
-
-/* label pill */
-.coco-tag {
-  margin-top: 10px;
-  border-radius: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #131a44;
-  padding: 3px 8px;
-  font-family: var(--font-tech), ui-monospace, monospace;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  white-space: nowrap;
-}
-
-.coco-glyph {
-  height: 38px;
-  width: 54px;
-  filter: drop-shadow(0 0 8px rgba(143, 178, 255, 0.3));
-}
-
-.coco-glyph-core {
-  height: 40px;
-  width: 40px;
-}
-
-/* Wires */
-.coco-dash {
-  animation: coco-dash 2.6s linear infinite;
-}
-@keyframes coco-dash {
-  from {
-    stroke-dashoffset: 100;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* Core */
-.coco-core-ring {
-  position: absolute;
-  inset: 24%;
-  border-radius: 16px;
-  padding: 1px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    rgba(157, 184, 255, 0.05) 140deg,
-    #e8f0ff 200deg,
-    rgba(157, 184, 255, 0.05) 260deg,
-    transparent 360deg
-  );
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  animation: coco-orbit 5s linear infinite;
-}
-
-.coco-core-glow {
-  position: absolute;
-  inset: 20%;
-  border-radius: 999px;
-  background: radial-gradient(closest-side, rgba(143, 178, 255, 0.5), transparent);
-  filter: blur(14px);
-  animation: coco-pulse 3s ease-in-out infinite;
-}
-
-/* Glyph micro animations */
-.coco-candle {
-  transform-origin: center bottom;
-  animation: coco-candle 2.4s ease-in-out infinite;
-}
-@keyframes coco-candle {
-  0%,
-  100% {
-    opacity: 0.4;
-    transform: translateY(3px);
-  }
-  45% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.coco-node-dot {
-  animation: coco-pulse 2.2s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.coco-seg-dot {
-  opacity: 0.25;
-  animation: coco-seg 3.2s ease-in-out infinite;
-}
-@keyframes coco-seg {
-  0%,
-  100% {
-    opacity: 0.25;
-  }
-  40%,
-  70% {
-    opacity: 1;
-  }
-}
-
-.coco-seg-bar {
-  opacity: 0.35;
-  animation: coco-seg 3.2s ease-in-out infinite;
-  animation-delay: 1.4s;
-}
-
-.coco-ledger-bar {
-  animation: coco-ledger 1.8s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center bottom;
-}
-@keyframes coco-ledger {
-  0%,
-  100% {
-    transform: scaleY(0.45);
-    opacity: 0.55;
-  }
-  50% {
-    transform: scaleY(1);
-    opacity: 1;
-  }
-}
-
-.coco-orbit-dash {
-  animation: coco-dash 2.4s linear infinite;
-}
-
-.coco-wave {
-  animation: coco-wave 1.9s ease-in-out infinite;
-}
-@keyframes coco-wave {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-  45% {
-    opacity: 1;
-  }
-}
-
-.coco-core-diamond {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: coco-pulse 2.6s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .coco-dash,
-  .coco-orbit-dash,
-  .coco-core-ring,
-  .coco-core-glow,
-  .coco-candle,
-  .coco-node-dot,
-  .coco-seg-dot,
-  .coco-seg-bar,
-  .coco-ledger-bar,
-  .coco-core-diamond,
-  .coco-wave,
-  .coco-cell {
-    animation: none !important;
-    opacity: 1 !important;
-  }
-}
 
 /* Motion */
 .coco-rise {
@@ -773,5 +515,456 @@
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* ── Engine system map (app-tile constellation) ─────────────────────── */
+
+.coco-tile {
+  position: absolute;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 26%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    rgba(255, 255, 255, 0.22) 0 1px 0 0 inset,
+    rgba(0, 0, 0, 0.55) 0 22px 44px -18px,
+    rgba(0, 0, 0, 0.35) 0 0 0 1px;
+  opacity: 0;
+  animation: coco-pop 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--d, 0ms);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  cursor: default;
+}
+.coco-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 58%);
+  pointer-events: none;
+}
+.coco-tile::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.12), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.coco-tile:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow:
+    rgba(255, 255, 255, 0.28) 0 1px 0 0 inset,
+    rgba(0, 0, 0, 0.6) 0 30px 50px -18px;
+}
+.coco-tile:hover::after {
+  opacity: 1;
+}
+.coco-tile-icon {
+  width: 46%;
+  height: 46%;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+}
+
+@keyframes coco-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.coco-core {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow:
+    rgba(255, 255, 255, 0.08) 0 0 0 10px,
+    rgba(120, 160, 255, 0.55) 0 0 90px -8px,
+    rgba(0, 0, 0, 0.7) 0 30px 60px -24px;
+  animation: coco-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+.coco-core-img {
+  position: absolute;
+  inset: 12%;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.18) 0 0 0 1px inset;
+}
+.coco-core-halo {
+  position: absolute;
+  inset: -22%;
+  border-radius: 999px;
+  border: 1px dashed rgba(255, 255, 255, 0.28);
+  animation: coco-orbit 24s linear infinite;
+}
+
+.coco-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-tech), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* Wires */
+.coco-dash {
+  animation: coco-dash 2.6s linear infinite;
+}
+@keyframes coco-dash {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ── Market tape ────────────────────────────────────────────────────── */
+.coco-tape {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(3, 5, 20, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.coco-tape-track {
+  display: flex;
+  width: max-content;
+  animation: coco-marquee 48s linear infinite;
+}
+.coco-tape:hover .coco-tape-track {
+  animation-play-state: paused;
+}
+@keyframes coco-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.coco-tape-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  font-family: var(--font-tech), ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.78);
+}
+.coco-up {
+  color: #4ade80;
+}
+.coco-down {
+  color: #fb7185;
+}
+
+/* ── Dark glass card (modules / terminal) ───────────────────────────── */
+.coco-glass {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
+    rgba(10, 12, 40, 0.5);
+  backdrop-filter: blur(18px);
+  box-shadow:
+    rgba(255, 255, 255, 0.08) 0 1px 0 0 inset,
+    rgba(2, 6, 30, 0.5) 0 24px 60px -30px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.coco-glass:hover {
+  transform: translateY(-4px);
+  border-color: rgba(157, 184, 255, 0.4);
+  box-shadow:
+    rgba(255, 255, 255, 0.1) 0 1px 0 0 inset,
+    rgba(80, 120, 255, 0.25) 0 30px 70px -30px;
+}
+.coco-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  pointer-events: none;
+}
+
+.coco-mod-icon {
+  display: inline-grid;
+  place-items: center;
+  height: 46px;
+  width: 46px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    rgba(255, 255, 255, 0.2) 0 1px 0 0 inset,
+    rgba(0, 0, 0, 0.5) 0 14px 30px -14px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.coco-glass:hover .coco-mod-icon {
+  transform: translateY(-2px) rotate(-5deg);
+}
+
+.coco-chip-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--font-tech), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.coco-link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9db8ff;
+  transition: color 0.2s ease;
+}
+.coco-link-arrow svg {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.coco-link-arrow:hover {
+  color: #fff;
+}
+.coco-link-arrow:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Verdict mock inside OTC card */
+.coco-verdict-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.coco-verdict-bar > i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #4ade80, #22d3ee);
+  transform-origin: left;
+  animation: coco-fill 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes coco-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ── Steps ──────────────────────────────────────────────────────────── */
+.coco-step-num {
+  font-family: var(--font-tech), ui-monospace, monospace;
+  font-size: 52px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  background-image: linear-gradient(180deg, #1b3bd8 0%, rgba(27, 59, 216, 0.15) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.coco-step-line {
+  position: absolute;
+  top: 26px;
+  left: calc(50% + 40px);
+  right: calc(-50% + 40px);
+  height: 1px;
+  background: repeating-linear-gradient(90deg, #c9d6ff 0 6px, transparent 6px 12px);
+}
+
+/* ── Signal terminal ────────────────────────────────────────────────── */
+.coco-sig-row {
+  display: grid;
+  grid-template-columns: 52px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-tech), ui-monospace, monospace;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.8);
+  animation: coco-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.coco-sig-row[data-fresh='true'] {
+  border-color: rgba(74, 222, 128, 0.35);
+  background: rgba(74, 222, 128, 0.06);
+}
+.coco-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.coco-badge-call {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+.coco-badge-put {
+  color: #fb7185;
+  background: rgba(251, 113, 133, 0.12);
+  border: 1px solid rgba(251, 113, 133, 0.3);
+}
+.coco-conf {
+  position: relative;
+  width: 64px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.coco-conf > i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6fc0ff, #a78bff);
+}
+
+.coco-metric {
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  padding-left: 16px;
+}
+
+/* ── Testimonials ───────────────────────────────────────────────────── */
+.coco-quote {
+  position: relative;
+}
+.coco-quote::before {
+  content: '“';
+  position: absolute;
+  top: -18px;
+  left: -4px;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 72px;
+  line-height: 1;
+  color: rgba(0, 54, 255, 0.12);
+}
+.coco-avatar {
+  display: inline-grid;
+  place-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 12px;
+  font-family: var(--font-tech), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* ── FAQ ────────────────────────────────────────────────────────────── */
+.coco-faq {
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: #fff;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.coco-faq[open] {
+  border-color: #c9d6ff;
+  box-shadow: rgba(0, 54, 255, 0.08) 0 14px 30px -18px;
+}
+.coco-faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+.coco-faq summary::-webkit-details-marker {
+  display: none;
+}
+.coco-faq-chev {
+  display: inline-grid;
+  place-items: center;
+  height: 28px;
+  width: 28px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid var(--hairline);
+  color: var(--dim);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, color 0.2s ease;
+}
+.coco-faq[open] .coco-faq-chev {
+  transform: rotate(45deg);
+  background: var(--iris);
+  border-color: var(--iris);
+  color: #fff;
+}
+.coco-faq-body {
+  padding: 0 20px 18px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--dim);
+  animation: coco-rise 0.35s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coco-tile,
+  .coco-core,
+  .coco-core-halo,
+  .coco-dash,
+  .coco-tape-track,
+  .coco-sig-row,
+  .coco-verdict-bar > i {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .coco-sig-row {
+    grid-template-columns: 46px 1fr auto auto;
+    gap: 8px;
+    padding: 10px 8px;
+    font-size: 10.5px;
+    white-space: nowrap;
+  }
+  .coco-conf {
+    display: none;
   }
 }

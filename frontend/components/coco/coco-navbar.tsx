@@ -7,8 +7,10 @@ import { Menu, X, ArrowRight } from 'lucide-react'
 
 const NAV_LINKS = [
   { label: 'Engine', href: '#about' },
-  { label: 'Capabilities', href: '#features' },
+  { label: 'Modules', href: '#modules' },
+  { label: 'How it works', href: '#how' },
   { label: 'Access', href: '#pricing' },
+  { label: 'FAQ', href: '#faq' },
   { label: 'Support', href: 'https://t.me/Ayan_sx', external: true },
 ]
 
@@ -34,7 +36,7 @@ export function CocoNavbar() {
           </span>
         </a>
 
-        <div className="hidden items-center gap-9 md:flex">
+        <div className="hidden items-center gap-7 md:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
@@ -42,7 +44,7 @@ export function CocoNavbar() {
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
               className="coco-navlink"
-              data-testid={`nav-link-${link.label.toLowerCase()}`}
+              data-testid={`nav-link-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
             >
               {link.label}
             </a>

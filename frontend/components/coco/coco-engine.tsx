@@ -1,313 +1,212 @@
-const CELLS = [
-  { key: 'feed', label: 'Market feed' },
-  { key: 'core', label: 'Coco AI core' },
-  { key: 'models', label: 'AI models' },
-  { key: 'device', label: 'Your device' },
-  { key: 'ledger', label: 'Signal ledger' },
-  { key: 'events', label: 'Live events' },
-] as const
+import Image from 'next/image'
+import {
+  ScanLine,
+  ScanSearch,
+  Radio,
+  Telescope,
+  Newspaper,
+  ShieldHalf,
+  ChartCandlestick,
+  type LucideIcon,
+} from 'lucide-react'
 
-// chained loop: feed -> core -> models -> events -> ledger -> device -> feed, plus core -> ledger
-const LINKS = [
-  'M 25 21 C 33 16 40 16 44 21',
-  'M 56 21 C 62 16 69 16 76 21',
-  'M 89 30 C 94 42 94 54 89 62',
-  'M 76 70 C 69 75 62 75 56 70',
-  'M 44 70 C 38 75 31 75 25 70',
-  'M 11 62 C 6 50 6 38 11 30',
-  'M 50 41 C 50 52 50 58 50 62',
+type Tile = {
+  key: string
+  label: string
+  icon: LucideIcon
+  bg: string
+  ink: string
+}
+
+type Placed = { x: number; y: number; s: number }
+type Wire = { d: string; dot?: [number, number]; c: string }
+
+type Layout = {
+  w: number
+  h: number
+  core: { x: number; y: number; r: number }
+  tiles: Record<string, Placed>
+  wires: Wire[]
+}
+
+const TILES: Tile[] = [
+  { key: 'otc', label: 'OTC Analyzer', icon: ScanLine, bg: 'linear-gradient(145deg,#8a4cf0 0%,#4a1f9e 100%)', ink: '#fff' },
+  { key: 'real', label: 'Real Chart', icon: ScanSearch, bg: 'linear-gradient(145deg,#3d424f 0%,#1a1d25 100%)', ink: '#e8ecf5' },
+  { key: 'live', label: 'Live Signals', icon: Radio, bg: 'linear-gradient(145deg,#2563eb 0%,#0c2a7a 100%)', ink: '#fff' },
+  { key: 'future', label: 'Future Signals', icon: Telescope, bg: 'linear-gradient(145deg,#4a3823 0%,#1f160c 100%)', ink: '#ff7a45' },
+  { key: 'news', label: 'News Signals', icon: Newspaper, bg: 'linear-gradient(145deg,#3b3a2f 0%,#1a1a14 100%)', ink: '#f2f2ec' },
+  { key: 'risk', label: 'Risk Guard', icon: ShieldHalf, bg: 'linear-gradient(145deg,#3f3e86 0%,#1c1b4d 100%)', ink: '#9db8ff' },
+  { key: 'feed', label: 'Market Feed', icon: ChartCandlestick, bg: 'linear-gradient(145deg,#d02c97 0%,#5c1148 100%)', ink: '#fff' },
 ]
 
-const MOBILE_LINKS = [
-  'M 30 15 H 70',
-  'M 78 24 C 84 32 84 40 78 48',
-  'M 70 50 H 30',
-  'M 22 59 C 16 67 16 75 22 83',
-  'M 30 85 H 70',
-]
+const DESKTOP: Layout = {
+  w: 720,
+  h: 400,
+  core: { x: 360, y: 200, r: 54 },
+  tiles: {
+    otc: { x: 120, y: 78, s: 64 },
+    real: { x: 248, y: 128, s: 52 },
+    live: { x: 498, y: 98, s: 58 },
+    future: { x: 612, y: 112, s: 96 },
+    news: { x: 128, y: 300, s: 96 },
+    risk: { x: 516, y: 292, s: 72 },
+    feed: { x: 632, y: 326, s: 48 },
+  },
+  wires: [
+    { d: 'M120 110 V200 H360', dot: [120, 200], c: '#7c5cff' },
+    { d: 'M274 128 H360 V200', dot: [360, 128], c: '#9aa3b5' },
+    { d: 'M498 127 V200 H360', dot: [498, 200], c: '#3b82f6' },
+    { d: 'M564 112 H440 V200', dot: [440, 112], c: '#ff7a45' },
+    { d: 'M176 300 H300 V200', dot: [300, 300], c: '#b9b58a' },
+    { d: 'M480 292 H360 V200', dot: [360, 292], c: '#6f6fe8' },
+    { d: 'M632 302 V250 H360 V200', dot: [632, 250], c: '#e0409f' },
+  ],
+}
 
-export function CocoEngine() {
+const MOBILE: Layout = {
+  w: 360,
+  h: 460,
+  core: { x: 180, y: 230, r: 44 },
+  tiles: {
+    otc: { x: 70, y: 70, s: 56 },
+    real: { x: 180, y: 60, s: 44 },
+    live: { x: 290, y: 80, s: 56 },
+    future: { x: 300, y: 205, s: 72 },
+    news: { x: 60, y: 230, s: 72 },
+    risk: { x: 90, y: 390, s: 64 },
+    feed: { x: 270, y: 380, s: 56 },
+  },
+  wires: [
+    { d: 'M70 98 V150 H180 V230', dot: [70, 150], c: '#7c5cff' },
+    { d: 'M180 82 V230', dot: [180, 120], c: '#9aa3b5' },
+    { d: 'M290 108 V160 H180 V230', dot: [290, 160], c: '#3b82f6' },
+    { d: 'M264 205 H180 V230', dot: [230, 205], c: '#ff7a45' },
+    { d: 'M96 230 H180', dot: [130, 230], c: '#b9b58a' },
+    { d: 'M90 358 V300 H180 V230', dot: [90, 300], c: '#6f6fe8' },
+    { d: 'M270 352 V300 H180', dot: [270, 300], c: '#e0409f' },
+  ],
+}
+
+function pct(v: number, base: number) {
+  return `${(v / base) * 100}%`
+}
+
+function Diagram({ layout, className }: { layout: Layout; className?: string }) {
+  const { w, h, core, tiles, wires } = layout
   return (
-    <div className="coco-engine relative mx-auto w-full max-w-[760px]" data-testid="engine-diagram">
-      <div className="mb-7 flex items-center justify-center gap-2">
-        <span className="coco-pulse h-1.5 w-1.5 rounded-full bg-[#4ade80]" />
-        <span className="coco-mono text-[10px] uppercase tracking-[0.16em] text-white/45">
-          coco-engine · system map · syncing
+    <div className={`relative w-full ${className ?? ''}`} style={{ aspectRatio: `${w} / ${h}` }}>
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox={`0 0 ${w} ${h}`}
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="cocoPulse" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#8fb2ff" stopOpacity="0" />
+            <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+            <stop offset="100%" stopColor="#8fb2ff" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {wires.map((wire, i) => (
+          <g key={wire.d}>
+            <path
+              d={wire.d}
+              fill="none"
+              stroke="rgba(226,232,255,0.55)"
+              strokeWidth="1.4"
+              strokeLinejoin="round"
+              vectorEffect="non-scaling-stroke"
+            />
+            <path
+              className="coco-dash"
+              d={wire.d}
+              pathLength={100}
+              fill="none"
+              stroke="url(#cocoPulse)"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeDasharray="14 86"
+              vectorEffect="non-scaling-stroke"
+              style={{ animationDelay: `${i * 360}ms`, animationDuration: '3.2s' }}
+            />
+            {wire.dot && (
+              <circle
+                cx={wire.dot[0]}
+                cy={wire.dot[1]}
+                r="5"
+                fill="#141626"
+                stroke={wire.c}
+                strokeWidth="2.5"
+                vectorEffect="non-scaling-stroke"
+              />
+            )}
+          </g>
+        ))}
+      </svg>
+
+      {TILES.map((tile, i) => {
+        const p = tiles[tile.key]
+        return (
+          <div
+            key={tile.key}
+            title={tile.label}
+            className="coco-tile"
+            data-testid={`engine-tile-${tile.key}`}
+            style={
+              {
+                left: pct(p.x - p.s / 2, w),
+                top: pct(p.y - p.s / 2, h),
+                width: pct(p.s, w),
+                background: tile.bg,
+                color: tile.ink,
+                '--d': `${200 + i * 90}ms`,
+              } as React.CSSProperties
+            }
+          >
+            <tile.icon className="coco-tile-icon" strokeWidth={1.7} />
+          </div>
+        )
+      })}
+
+      <div
+        className="coco-core"
+        data-testid="engine-core"
+        style={{
+          left: pct(core.x - core.r, w),
+          top: pct(core.y - core.r, h),
+          width: pct(core.r * 2, w),
+        }}
+      >
+        <span className="coco-core-halo" aria-hidden="true" />
+        <span className="coco-core-img">
+          <Image src="/coco-ai.jpg" alt="Coco AI core" fill sizes="120px" className="object-cover" />
         </span>
-      </div>
-
-      <div className="relative">
-        <svg
-          className="pointer-events-none absolute inset-0 hidden h-full w-full md:block"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <defs>
-            <linearGradient id="cocoWire" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#8fb2ff" stopOpacity="0" />
-              <stop offset="50%" stopColor="#e8f0ff" stopOpacity="1" />
-              <stop offset="100%" stopColor="#8fb2ff" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          {LINKS.map((d, i) => (
-            <g key={d}>
-              <path
-                d={d}
-                pathLength={100}
-                fill="none"
-                stroke="rgba(255,255,255,0.2)"
-                strokeWidth="1"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                className="coco-dash"
-                d={d}
-                pathLength={100}
-                fill="none"
-                stroke="url(#cocoWire)"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeDasharray="18 82"
-                vectorEffect="non-scaling-stroke"
-                style={{ animationDelay: `${i * 380}ms` }}
-              />
-            </g>
-          ))}
-        </svg>
-
-        <svg
-          className="pointer-events-none absolute inset-0 h-full w-full md:hidden"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          {MOBILE_LINKS.map((d, i) => (
-            <g key={d}>
-              <path
-                d={d}
-                pathLength={100}
-                fill="none"
-                stroke="rgba(255,255,255,0.2)"
-                strokeWidth="1"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                className="coco-dash"
-                d={d}
-                pathLength={100}
-                fill="none"
-                stroke="url(#cocoWire)"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeDasharray="20 80"
-                vectorEffect="non-scaling-stroke"
-                style={{ animationDelay: `${i * 420}ms` }}
-              />
-            </g>
-          ))}
-        </svg>
-
-        <div className="relative grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-12 md:grid-cols-3 md:gap-x-16 md:gap-y-14">
-          {CELLS.map((cell, i) => (
-            <figure
-              key={cell.key}
-              className="coco-cell flex flex-col items-center"
-              style={{ '--d': `${i * 120}ms` } as React.CSSProperties}
-            >
-              <div className={`coco-chip ${cell.key === 'core' ? 'coco-chip-core' : ''}`}>
-                <span className="coco-pins coco-pins-l" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span className="coco-pins coco-pins-r" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span className="coco-notch" aria-hidden="true" />
-                <Glyph kind={cell.key} />
-              </div>
-              <figcaption className="coco-tag">{cell.label}</figcaption>
-            </figure>
-          ))}
-        </div>
       </div>
     </div>
   )
 }
 
-function Glyph({ kind }: { kind: (typeof CELLS)[number]['key'] }) {
-  if (kind === 'core') {
-    return (
-      <div className="relative grid h-full w-full place-items-center">
-        <span className="coco-core-ring" aria-hidden="true" />
-        <span className="coco-core-glow" aria-hidden="true" />
-        <svg viewBox="0 0 48 48" className="coco-glyph coco-glyph-core" aria-hidden="true">
-          <rect
-            x="12"
-            y="12"
-            width="24"
-            height="24"
-            rx="5"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            fill="none"
-          />
-          <path
-            d="M24 17 L29.5 24 L24 31 L18.5 24 Z"
-            fill="currentColor"
-            className="coco-core-diamond"
-          />
-          <g stroke="currentColor" strokeOpacity="0.55" strokeWidth="1.4" strokeLinecap="round">
-            <path d="M18 12 V7 M24 12 V6 M30 12 V7 M18 36 V41 M24 36 V42 M30 36 V41" />
-            <path d="M12 18 H7 M12 24 H6 M12 30 H7 M36 18 H41 M36 24 H42 M36 30 H41" />
-          </g>
-        </svg>
-      </div>
-    )
-  }
-
-  if (kind === 'feed') {
-    return (
-      <svg viewBox="0 0 64 48" className="coco-glyph" aria-hidden="true">
-        <path d="M2 44 H62" stroke="currentColor" strokeOpacity="0.22" strokeWidth="1" />
-        {[
-          { x: 10, y: 26, h: 12 },
-          { x: 22, y: 16, h: 20 },
-          { x: 34, y: 22, h: 15 },
-          { x: 46, y: 10, h: 26 },
-        ].map((c, i) => (
-          <g key={c.x} className="coco-candle" style={{ animationDelay: `${i * 180}ms` }}>
-            <line
-              x1={c.x + 3}
-              x2={c.x + 3}
-              y1={c.y - 5}
-              y2={c.y + c.h + 4}
-              stroke="currentColor"
-              strokeWidth="1.2"
-              strokeOpacity="0.5"
-            />
-            <rect x={c.x} y={c.y} width="6" height={c.h} rx="1.5" fill="currentColor" />
-          </g>
-        ))}
-      </svg>
-    )
-  }
-
-  if (kind === 'models') {
-    return (
-      <svg viewBox="0 0 64 48" className="coco-glyph" aria-hidden="true">
-        <g stroke="currentColor" strokeOpacity="0.3" strokeWidth="1">
-          <path d="M32 10 L14 20 M32 10 L50 20 M14 20 L32 38 M50 20 L32 38 M14 20 L50 20 M32 10 L32 38" />
-        </g>
-        {[
-          [32, 10],
-          [14, 20],
-          [50, 20],
-          [32, 38],
-        ].map(([cx, cy], i) => (
-          <circle
-            key={`${cx}-${cy}`}
-            cx={cx}
-            cy={cy}
-            r="3.4"
-            fill="currentColor"
-            className="coco-node-dot"
-            style={{ animationDelay: `${i * 260}ms` }}
-          />
-        ))}
-      </svg>
-    )
-  }
-
-  if (kind === 'device') {
-    return (
-      <svg viewBox="0 0 64 48" className="coco-glyph" aria-hidden="true">
-        <rect
-          x="6"
-          y="6"
-          width="52"
-          height="36"
-          rx="4"
-          stroke="currentColor"
-          strokeOpacity="0.3"
-          fill="none"
-        />
-        <circle cx="13" cy="14" r="1.6" fill="currentColor" fillOpacity="0.7" />
-        <circle cx="13" cy="22" r="1.6" fill="currentColor" fillOpacity="0.7" />
-        {[0, 1].map((row) => (
-          <g key={row}>
-            {[0, 1, 2, 3, 4, 5].map((i) => (
-              <rect
-                key={i}
-                x={20 + i * 6}
-                y={12 + row * 8}
-                width="4"
-                height="4"
-                rx="1"
-                fill="currentColor"
-                className="coco-seg-dot"
-                style={{ animationDelay: `${row * 600 + i * 110}ms` }}
-              />
-            ))}
-          </g>
-        ))}
-        <rect x="13" y="31" width="38" height="6" rx="3" fill="currentColor" className="coco-seg-bar" />
-      </svg>
-    )
-  }
-
-  if (kind === 'ledger') {
-    return (
-      <svg viewBox="0 0 64 48" className="coco-glyph" aria-hidden="true">
-        <path d="M8 42 H56" stroke="currentColor" strokeOpacity="0.22" strokeWidth="1" />
-        {[16, 26, 12, 32, 20, 36, 24].map((h, i) => (
-          <rect
-            key={i}
-            x={10 + i * 6.6}
-            y={40 - h}
-            width="3.4"
-            height={h}
-            rx="1.2"
-            fill="currentColor"
-            className="coco-ledger-bar"
-            style={{ animationDelay: `${i * 120}ms`, transformOrigin: `center ${40}px` }}
-          />
-        ))}
-      </svg>
-    )
-  }
-
+export function CocoEngine() {
   return (
-    <svg viewBox="0 0 64 48" className="coco-glyph" aria-hidden="true">
-      {/* broadcast tower */}
-      <path
-        d="M32 16 L24 42 M32 16 L40 42 M27 33 H37"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <circle cx="32" cy="13" r="2.6" fill="currentColor" className="coco-node-dot" />
-      {[
-        { d: 'M25 10 C22 12.5 22 16.5 25 19', delay: 0 },
-        { d: 'M39 10 C42 12.5 42 16.5 39 19', delay: 0 },
-        { d: 'M21 6 C16 10 16 19 21 23', delay: 400 },
-        { d: 'M43 6 C48 10 48 19 43 23', delay: 400 },
-      ].map((w) => (
-        <path
-          key={w.d}
-          d={w.d}
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          fill="none"
-          className="coco-wave"
-          style={{ animationDelay: `${w.delay}ms` }}
-        />
-      ))}
-    </svg>
+    <div className="coco-engine relative mx-auto w-full max-w-[820px]" data-testid="engine-diagram">
+      <div className="mb-6 flex items-center justify-center gap-2">
+        <span className="coco-pulse h-1.5 w-1.5 rounded-full bg-[#4ade80]" />
+        <span className="coco-mono text-[10px] uppercase tracking-[0.16em] text-white/45">
+          coco-engine · 7 modules · one core
+        </span>
+      </div>
+
+      <Diagram layout={DESKTOP} className="hidden sm:block" />
+      <Diagram layout={MOBILE} className="mx-auto max-w-[360px] sm:hidden" />
+
+      <ul className="mx-auto mt-8 flex max-w-[640px] flex-wrap items-center justify-center gap-2" data-testid="engine-legend">
+        {TILES.map((t) => (
+          <li key={t.key} className="coco-legend">
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.bg }} />
+            {t.label}
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
