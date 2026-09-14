@@ -1,6 +1,5 @@
 import { CocoNavbar } from '@/components/coco/coco-navbar'
 import { CocoHero } from '@/components/coco/coco-hero'
-import { CocoTicker } from '@/components/coco/coco-ticker'
 import { CocoFeatures } from '@/components/coco/coco-features'
 import { CocoModules } from '@/components/coco/coco-modules'
 import { CocoHow } from '@/components/coco/coco-how'
@@ -16,7 +15,6 @@ export function LandingPage() {
       <div className="coco-dark">
         <CocoNavbar />
         <CocoHero />
-        <CocoTicker />
       </div>
       <main>
         <CocoFeatures />

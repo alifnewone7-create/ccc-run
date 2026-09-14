@@ -5,7 +5,7 @@ import { CocoEngine } from '@/components/coco/coco-engine'
 export function CocoHero() {
   return (
     <section id="about" className="relative overflow-hidden scroll-mt-24">
-      <div className="mx-auto max-w-[1000px] px-4 pb-16 pt-8 text-center sm:px-6 sm:pb-20 sm:pt-10 lg:pb-24 lg:pt-12">
+      <div className="mx-auto max-w-[1000px] px-4 pb-20 pt-8 text-center sm:px-6 sm:pb-24 sm:pt-10 lg:pb-28 lg:pt-12">
         <h1
           className="coco-display coco-title-gradient coco-rise mx-auto max-w-[18ch] text-balance text-[2.5rem] sm:text-[3.4rem] lg:text-[4.2rem]"
           style={{ '--d': '60ms' } as React.CSSProperties}

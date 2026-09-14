@@ -208,14 +208,6 @@ export function CocoEngine() {
       <Diagram layout={DESKTOP} className="hidden sm:block" />
       <Diagram layout={MOBILE} className="mx-auto max-w-[360px] sm:hidden" />
 
-      <ul className="mx-auto mt-8 flex max-w-[640px] flex-wrap items-center justify-center gap-2" data-testid="engine-legend">
-        {TILES.map((t) => (
-          <li key={t.key} className="coco-legend">
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: t.bg }} />
-            {t.label}
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }
