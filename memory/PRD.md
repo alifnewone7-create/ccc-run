@@ -20,6 +20,8 @@ Clone `https://github.com/alifnewone7-create/cc-run.git`, run the site as-is, th
 
 - 2026-06: removed engine legend chips and market ticker section (coco-ticker.tsx deleted); hero bottom padding rebalanced.
 
+- 2026-06: colour grading shifted from blue to dark purple/indigo (CSS vars --iris/--cyan, hero + shade gradients, buttons, cards, glass, steps, tile accents).
+
 ## Backlog
 - P1: Wire ticker/terminal to real data (`/api/signals/live`) if desired.
 - P2: Dashboard pages restyle to match new home design system.

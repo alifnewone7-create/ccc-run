@@ -36,7 +36,7 @@ const MODULES: Module[] = [
     desc: 'Real-time entries broadcast the moment confluence lands across 42 monitored pairs.',
     tags: ['Real time', '24 / 7'],
     icon: Radio,
-    bg: 'linear-gradient(145deg,#2563eb,#0c2a7a)',
+    bg: 'linear-gradient(145deg,#5b4df0,#241c7a)',
     ink: '#fff',
   },
   {

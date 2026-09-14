@@ -12,7 +12,7 @@ const QUOTES = [
     name: 'Ayesha K.',
     role: 'Part-time trader · UAE',
     initials: 'AK',
-    bg: 'linear-gradient(145deg,#2563eb,#0c2a7a)',
+    bg: 'linear-gradient(145deg,#5b4df0,#241c7a)',
     text: 'I only trade two hours a night. Live Signals hands me the setups so I can act instead of scanning charts.',
   },
   {

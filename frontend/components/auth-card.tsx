@@ -260,7 +260,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
           <ul className="mt-9 flex flex-col items-center gap-4">
             {BRAND_POINTS.map((p) => (
               <li key={p.text} className="flex flex-col items-center gap-2">
-                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/12 bg-white/[0.06] text-[#9db8ff]">
+                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/12 bg-white/[0.06] text-[#c4a6ff]">
                   <p.icon className="h-4 w-4" />
                 </span>
                 <span className="text-sm leading-relaxed text-white/65">{p.text}</span>

@@ -86,7 +86,7 @@ export function CocoFeatures() {
           {STAT_BAND.map((s) => (
             <div key={s.k}>
               <p className="coco-mono text-[10px] uppercase text-[var(--dim)]">{s.k}</p>
-              <p className="coco-display mt-2 bg-[linear-gradient(140deg,#1b3bd8,#6d3bff)] bg-clip-text text-[2.4rem] text-transparent">
+              <p className="coco-display mt-2 bg-[linear-gradient(140deg,#4b21c9,#9b6bff)] bg-clip-text text-[2.4rem] text-transparent">
                 {s.v}
               </p>
             </div>

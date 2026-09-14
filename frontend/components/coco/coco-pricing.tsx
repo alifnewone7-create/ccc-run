@@ -95,7 +95,7 @@ export function CocoPricing() {
                 href="https://t.me/Ayan_sx"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="coco-btn w-full border border-[#cfe0ff] bg-[#e1ecff] text-[var(--iris)] hover:bg-[#d3e3ff] sm:w-auto"
+                className="coco-btn w-full border border-[#dccdff] bg-[#ece4ff] text-[var(--iris)] hover:bg-[#e0d3ff] sm:w-auto"
                 data-testid="pricing-support-cta"
               >
                 <Headset className="h-4 w-4" />
@@ -125,7 +125,7 @@ export function CocoPricing() {
             <ul className="mt-7 flex flex-col items-center gap-3">
               {LICENSE_PERKS.map((perk) => (
                 <li key={perk} className="flex items-center gap-3 text-sm text-white/80">
-                  <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/12 text-[#9db8ff]">
+                  <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/12 text-[#c4a6ff]">
                     <Check className="h-3 w-3" />
                   </span>
                   {perk}

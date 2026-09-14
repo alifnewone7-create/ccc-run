@@ -32,10 +32,10 @@ type Layout = {
 const TILES: Tile[] = [
   { key: 'otc', label: 'OTC Analyzer', icon: GlyphOtc, bg: 'linear-gradient(145deg,#8a4cf0 0%,#4a1f9e 100%)', ink: '#fff' },
   { key: 'real', label: 'Real Chart', icon: GlyphReal, bg: 'linear-gradient(145deg,#3d424f 0%,#1a1d25 100%)', ink: '#e8ecf5' },
-  { key: 'live', label: 'Live Signals', icon: GlyphLive, bg: 'linear-gradient(145deg,#2563eb 0%,#0c2a7a 100%)', ink: '#fff' },
+  { key: 'live', label: 'Live Signals', icon: GlyphLive, bg: 'linear-gradient(145deg,#5b4df0 0%,#241c7a 100%)', ink: '#fff' },
   { key: 'future', label: 'Future Signals', icon: GlyphFuture, bg: 'linear-gradient(145deg,#4a3823 0%,#1f160c 100%)', ink: '#ff7a45' },
   { key: 'news', label: 'News Signals', icon: GlyphNews, bg: 'linear-gradient(145deg,#3b3a2f 0%,#1a1a14 100%)', ink: '#f2f2ec' },
-  { key: 'risk', label: 'Risk Guard', icon: GlyphRisk, bg: 'linear-gradient(145deg,#3f3e86 0%,#1c1b4d 100%)', ink: '#9db8ff' },
+  { key: 'risk', label: 'Risk Guard', icon: GlyphRisk, bg: 'linear-gradient(145deg,#3f3e86 0%,#1c1b4d 100%)', ink: '#c4a6ff' },
   { key: 'feed', label: 'Market Feed', icon: GlyphFeed, bg: 'linear-gradient(145deg,#d02c97 0%,#5c1148 100%)', ink: '#fff' },
 ]
 
@@ -124,7 +124,7 @@ function Diagram({ layout, className }: { layout: Layout; className?: string }) 
               d={wire.d}
               pathLength={100}
               fill="none"
-              stroke="#8fb2ff"
+              stroke="#c4a6ff"
               strokeOpacity="0.9"
               strokeWidth="7"
               strokeLinecap="round"
